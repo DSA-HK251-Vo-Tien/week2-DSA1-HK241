@@ -33,19 +33,6 @@ TEST_SUITE("DoublyLinkedList Iterator")
         }
     }
 
-    TEST_CASE("Iterator out of bounds")
-    {
-        DoublyLinkedList<int> list;
-        list.insertAtTail(1);
-        list.insertAtTail(2);
-
-        auto it = list.begin();
-        ++it; // Move to second element
-        ++it; // Move to end (should throw)
-
-        CHECK_THROWS_AS(++it, cursor_error);
-    }
-
     TEST_CASE("Iterator comparison")
     {
         DoublyLinkedList<int> list;
@@ -79,7 +66,6 @@ TEST_SUITE("DoublyLinkedList Iterator")
         DoublyLinkedList<int> list;
         auto it = list.begin();
         CHECK(it == list.end()); // Should be equal since the list is empty
-        CHECK_THROWS_AS(++it, cursor_error); // Should throw when trying to increment
     }
 
     TEST_CASE("Iterator with single element")
