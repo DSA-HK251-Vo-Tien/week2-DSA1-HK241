@@ -40,23 +40,30 @@ public:
     {
     private:
         Node *current;
+        const DoublyLinkedList<T> *list;
 
     public:
-        Iterator(Node *node) : current(node) {}
+        Iterator(Node *node, const DoublyLinkedList<T> *list) : current(node), list(list) {}
+        // Iterator(Node *node) : current(node) {}
 
         T &operator*() const
         {
+            if(list->length == 0) {throw cursor_error(); }
             return current->data;
         }
 
         Iterator &operator++()
         {
+            if (list->length == 0) { throw cursor_error(); }
+            if (current == list->tail /*|| current->next == list->tail*/) { throw cursor_error(); } // Fix: check if at end
             current = current->next;
             return *this;
         }
 
         Iterator &operator--()
         {
+            if(list->length == 0) {throw cursor_error(); }
+            if(current->prev == list->head||current == list->head){throw cursor_error(); } 
             current = current->prev;
             return *this;
         }
@@ -74,12 +81,12 @@ public:
 
     Iterator begin() const
     {
-        return Iterator(head->next);
+        return Iterator(head->next, this);
     }
 
     Iterator end() const
     {
-        return Iterator(tail);
+        return Iterator(tail, this);
     }
 };
 #endif // __DOUBLY_LINKED_LIST_H__

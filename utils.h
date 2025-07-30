@@ -73,6 +73,13 @@ public:
                (fabs(y - other.y) < EPSILON) &&
                (fabs(z - other.z) < EPSILON);
     }
+    bool operator!=(const Point &other) const
+    {
+        const double EPSILON = 1e-9;
+        return (fabs(x - other.x) > EPSILON) ||
+               (fabs(y - other.y) > EPSILON) ||
+               (fabs(z - other.z) > EPSILON);
+    }
 
     friend std::ostream &operator<<(std::ostream &os, const Point &point)
     {
