@@ -90,9 +90,9 @@ TEST_SUITE("Expanded DoublyLinkedList Basic Operations")
         DoublyLinkedList<int> list;
         list.insertAtTail(1);
         list.insertAtTail(2);
-        CHECK_THROWS_AS(list.insertAt(2, 3), out_of_range);
-        CHECK(list.size() == 2);
-        CHECK_THROWS_AS((list.get(2) == 3),out_of_range);
+        list.insertAt(2, 3);
+        CHECK(list.size() == 3);
+        CHECK((list.get(2) == 3));
     }
 
     TEST_CASE("Operations on an empty list")
