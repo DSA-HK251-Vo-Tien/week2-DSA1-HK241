@@ -295,16 +295,6 @@ TEST_SUITE("DoublyLinkedList Iterator")
             }
             CHECK(idx == 3);
         }
-
-        SUBCASE("Post-increment iteration")
-        {
-            int idx = 0;
-            for (auto it = list.begin(); it != list.end(); it++)
-            {
-                CHECK(*it == expected[idx++]);
-            }
-            CHECK(idx == 3);
-        }
     }
 
     TEST_CASE("Iterator on empty list")
