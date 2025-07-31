@@ -25,7 +25,7 @@
     "postStartCommand": "bash .devcontainer/banner.sh",
     "remoteUser": "root",
     "containerEnv": {
-        "GIT_NAME": "Tien Vo",
-        "GIT_EMAIL": "votien10dsa@gmail.com"
+        "GIT_NAME": "Kevildarknight",
+        "GIT_EMAIL": "dat.nguyen2352235@hcmut.edu.vn"
     }
 }
