@@ -1,7 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest/doctest.h"
-#include "tests/test_basic.cpp"
-#include "tests/test_iterator.cpp"
+
 /*
 Build:
 Toàn bộ chương trình:
