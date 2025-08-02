@@ -33,11 +33,10 @@ TEST_SUITE("DoublyLinkedList Iterator")
         }
     }
 
-    // TODO add test case
+    //TODO add test case
     TEST_CASE("Iterator - Duyệt ngược danh sách bằng operator--") {
     DoublyLinkedList<int> list;
     list.insertAtTail(1); list.insertAtTail(2); list.insertAtTail(3);
-
     auto it = list.end();
     --it; CHECK(*it == 3);
     --it; CHECK(*it == 2);
@@ -46,11 +45,9 @@ TEST_SUITE("DoublyLinkedList Iterator")
     TEST_CASE("Iterator - So sánh == và !=") {
     DoublyLinkedList<int> list;
     list.insertAtHead(100); list.insertAtHead(200);
-
     auto it1 = list.begin();
     auto it2 = list.begin();
     auto it3 = list.end();
-
     CHECK(it1 == it2);
     CHECK(it1 != it3);
     };
