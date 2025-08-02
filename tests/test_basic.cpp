@@ -83,3 +83,71 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
 }
 
 // TODO add test case
+TEST_SUITE("DDL Test"){
+    TEST_CASE("contain"){
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        list.insertAtTail(3);
+        CHECK(list.contains(4)==false);
+        CHECK(list.contains(3)==true);
+    };
+    TEST_CASE("get index"){
+        DoublyLinkedList<char> list;
+        list.insertAtHead('a');
+        list.insertAtHead('z');
+        list.insertAtHead('c');
+        CHECK(list.indexOf('x')==-1);
+        CHECK(list.indexOf('a')==2);
+    }
+    TEST_CASE("tostring"){
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        list.insertAtTail(3);
+        CHECK(list.toString()=="[1, 2, 3]");
+    }
+    TEST_CASE("invalid input"){
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        list.insertAtTail(3);
+        list.insertAt(2,4);
+        CHECK(list.get(2)==4);
+    }
+    TEST_CASE("Khởi tạo danh sách rỗng") {
+    DoublyLinkedList<int> list;
+    CHECK(list.size() == 0);
+    CHECK(list.toString() == "[]");
+    }
+    TEST_CASE("Chèn với index không hợp lệ") {
+    DoublyLinkedList<int> list;
+    CHECK_THROWS_AS(list.insertAt(1, 100), std::out_of_range);
+    }
+    TEST_CASE("Chèn với index không hợp lệ") {
+    DoublyLinkedList<int> list;
+    CHECK_THROWS_AS(list.deleteAt(1), std::out_of_range);
+    CHECK_THROWS_AS(list.deleteAt(-100), std::out_of_range);
+    }
+    TEST_CASE("Iterator remains valid after insertAtTail") {
+    DoublyLinkedList<int> list;
+    list.insertAtTail(1);
+    list.insertAtTail(2);
+    
+    auto it = list.begin(); // trỏ đến phần tử 1
+    list.insertAtTail(3);   // chèn thêm phần tử cuối
+
+    CHECK(*it == 1);
+    ++it;
+    CHECK(*it == 2);
+    ++it;
+    CHECK(*it == 3);
+    }
+    TEST_CASE("Iterator on empty list") {
+    DoublyLinkedList<int> list;
+    auto it = list.begin();
+    auto et = list.end();
+
+    CHECK(it == et);
+    }
+}
