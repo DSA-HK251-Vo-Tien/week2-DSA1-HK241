@@ -1,0 +1,30 @@
+// .vscode/tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build test",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "-I.",
+                "-Isrc",
+                "main.cpp",
+                "src/DoublyLinkedList.cpp",
+                "tests/test_basic.cpp",
+                "tests/test_iterator.cpp",
+                "-o",
+                "test_debug"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}

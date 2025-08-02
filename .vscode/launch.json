@@ -1,0 +1,30 @@
+// .vscode/launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug All Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/test_debug",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "Build test"
+        },
+        {
+            "name": "Debug 1 Test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/test_debug",
+            "args": [
+                "--test-case=Insert at head and tail"
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "Build test"
+        }
+    ]
+}
