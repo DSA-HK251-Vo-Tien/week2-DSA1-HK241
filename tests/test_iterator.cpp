@@ -35,3 +35,39 @@ TEST_SUITE("DoublyLinkedList Iterator")
 
     // TODO add test case
 }
+
+TEST_SUITE("them 4 test case") {
+    TEST_CASE("iter1") {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        list.insertAtTail(3);
+        int count = 0;
+        for (auto x : list) count++;
+        CHECK(count == 3);
+    }
+
+    TEST_CASE("iter2") {
+        DoublyLinkedList<int> list;
+        list.insertAtHead(10);
+        list.insertAtHead(20);
+        int count = 0;
+        for (auto x : list) count++;
+        CHECK(count == 2);
+    }
+
+    TEST_CASE("iter3") {
+        DoublyLinkedList<int> list;
+        int count = 0;
+        for (auto x : list) count++;
+        CHECK(count == 0);
+    }
+
+    TEST_CASE("iter4") {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(42);
+        int count = 0;
+        for (auto x : list) count++;
+        CHECK(count == 1);
+    }
+}
