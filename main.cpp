@@ -4,7 +4,7 @@
 /*
 Build:
 Toàn bộ chương trình:
-    ! g++ -o main -I. -Isrc main.cpp src/DoublyLinkedList.cpp tests/ *.cpp
+    ! g++ -o main -I. -Isrc main.cpp src/DoublyLinkedList.cpp tests/*.cpp
 
 Trong đó:
     -I.            : Bao gồm thư mục hiện tại để tìm file header
