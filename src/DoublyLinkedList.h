@@ -22,7 +22,7 @@ private:
     int length;
 
 public:
-    DoublyLinkedList(){
+    DoublyLinkedList(): head(nullptr), tail(nullptr), length(0){
 
     }
     ~DoublyLinkedList(){
@@ -30,7 +30,7 @@ public:
     }
 
     void insertAtHead(T data){
-        
+
     }
     void insertAtTail(T data);
     void insertAt(int index, T data);
