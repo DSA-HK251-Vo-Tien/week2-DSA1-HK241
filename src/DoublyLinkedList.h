@@ -22,10 +22,16 @@ private:
     int length;
 
 public:
-    DoublyLinkedList();
-    ~DoublyLinkedList();
+    DoublyLinkedList(): head(nullptr), tail(nullptr), length(0){
 
-    void insertAtHead(T data);
+    }
+    ~DoublyLinkedList(){
+
+    }
+
+    void insertAtHead(T data){
+        std::cout << "Changed";
+    }
     void insertAtTail(T data);
     void insertAt(int index, T data);
     void deleteAt(int index);
