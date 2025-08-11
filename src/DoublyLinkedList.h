@@ -30,7 +30,7 @@ public:
     }
 
     void insertAtHead(T data){
-
+        std::cout << "Changed";
     }
     void insertAtTail(T data);
     void insertAt(int index, T data);
