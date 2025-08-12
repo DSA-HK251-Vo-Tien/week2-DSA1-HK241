@@ -22,8 +22,8 @@ private:
     int length;
 
 public:
-    DoublyLinkedList();
-    ~DoublyLinkedList();
+    DoublyLinkedList() {}
+    ~DoublyLinkedList() {}
 
     void insertAtHead(T data);
     void insertAtTail(T data);
