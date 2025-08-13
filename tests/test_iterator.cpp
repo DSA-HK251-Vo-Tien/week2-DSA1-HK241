@@ -198,7 +198,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
             list.insertAtTail(2);
             auto it = list.begin();
             list.reverse();
-            CHECK(*it == 1); // depends on implementation details
+            CHECK(*it == 1); // depends on implementation detail
         }
 
         TEST_CASE("Empty list doesn't enter loop")
