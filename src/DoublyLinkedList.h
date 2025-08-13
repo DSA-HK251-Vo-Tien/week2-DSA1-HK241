@@ -64,6 +64,9 @@ public:
         bool operator==(const Iterator &other) const
         {
             return current == other.current;
+
+
+            
         }
 
         bool operator!=(const Iterator &other) const
