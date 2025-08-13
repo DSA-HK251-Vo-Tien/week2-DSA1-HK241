@@ -49,7 +49,6 @@ public:
     public:
         Iterator(Node *node, const DoublyLinkedList<T> *list) : current(node), list(list) {}
 
-        // TODO implement Iterator
         // Dereference
         T &operator*() { return current->data; }
 
@@ -68,7 +67,6 @@ public:
             return tmp;
         }
 
-        // Comparison
         bool operator!=(const Iterator &other) const { return current != other.current; }
         bool operator==(const Iterator &other) const { return current == other.current; }
     };
