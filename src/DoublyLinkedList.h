@@ -22,8 +22,23 @@ private:
     int length;
 
 public:
-    DoublyLinkedList();
-    ~DoublyLinkedList();
+    DoublyLinkedList() : length(0){
+        head = new Node(); // dummy head
+        tail = new Node(); // dummy tail
+        head->next = tail;
+        tail->prev = head;
+    }
+    ~DoublyLinkedList(){
+        // – Chức năng: Giải phóng bộ nhớ của toàn bộ các phần tử, tránh rò rỉ bộ nhớ.
+        // – Ngoại lệ: Không có ngoại lệ.
+        // – Độ phức tạp: O(n).
+        Node* curr = head;
+        while(curr != nullptr){
+            Node* next = curr -> next;
+            delete curr;
+            cur = next;
+    }
+    }
 
     void insertAtHead(T data);
     void insertAtTail(T data);
