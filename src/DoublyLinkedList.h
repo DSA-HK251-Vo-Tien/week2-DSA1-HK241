@@ -80,5 +80,5 @@ public:
     {
         return Iterator(tail, this);
     }
-}
+};
 #endif // __DOUBLY_LINKED_LIST_H__
