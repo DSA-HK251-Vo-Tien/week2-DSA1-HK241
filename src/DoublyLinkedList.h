@@ -22,8 +22,12 @@ private:
     int length;
 
 public:
-    DoublyLinkedList();
-    ~DoublyLinkedList();
+    DoublyLinkedList() {
+
+    };
+    ~DoublyLinkedList() {
+
+    };
 
     void insertAtHead(T data);
     void insertAtTail(T data);
@@ -40,46 +44,43 @@ public:
     {
     private:
         Node *current;
+        const DoublyLinkedList<T> *list;
 
     public:
-        Iterator(Node *node) : current(node) {}
+        Iterator(Node *node, const DoublyLinkedList<T> *list) : current(node), list(list) {}
 
-        T &operator*() const
-        {
-            return current->data;
-        }
+        // TODO implement Iterator
+        // Dereference
+        T &operator*() { return current->data; }
 
+        // Prefix increment
         Iterator &operator++()
         {
             current = current->next;
             return *this;
         }
 
-        Iterator &operator--()
+        // Postfix increment
+        Iterator operator++(int)
         {
-            current = current->prev;
-            return *this;
+            Iterator tmp = *this;
+            current = current->next;
+            return tmp;
         }
 
-        bool operator==(const Iterator &other) const
-        {
-            return current == other.current;
-        }
-
-        bool operator!=(const Iterator &other) const
-        {
-            return current != other.current;
-        }
+        // Comparison
+        bool operator!=(const Iterator &other) const { return current != other.current; }
+        bool operator==(const Iterator &other) const { return current == other.current; }
     };
 
     Iterator begin() const
     {
-        return Iterator(head->next);
+        return Iterator(head->next, this);
     }
 
     Iterator end() const
     {
-        return Iterator(tail);
+        return Iterator(tail, this);
     }
-};
+}
 #endif // __DOUBLY_LINKED_LIST_H__
