@@ -41,7 +41,7 @@ public:
     private:
         Node *current;
 
-    public:0
+    public:
         Iterator(Node *node) : current(node) {}
 
         T &operator*() const
