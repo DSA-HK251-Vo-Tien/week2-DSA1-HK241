@@ -17,17 +17,13 @@ private:
         Node(const T &val, Node *prev = nullptr, Node *next = nullptr) : data(val), prev(prev), next(next) {}
     };
 
-    Node *head; // Dummy head
-    Node *tail; // Dummy tail
-    int length;
+    Node *head = nullptr;
+    Node *tail = nullptr;
+    int length = 0;
 
 public:
-    DoublyLinkedList() {
-
-    }
-    ~DoublyLinkedList() {
-
-    }
+    DoublyLinkedList();
+    ~DoublyLinkedList();
 
     void insertAtHead(T data);
     void insertAtTail(T data);
@@ -44,46 +40,34 @@ public:
     {
     private:
         Node *current;
+        const DoublyLinkedList<T> *list;
 
     public:
-        Iterator(Node *node) : current(node) {}
+        Iterator(Node *node, const DoublyLinkedList<T> *list) : current(node), list(list) {}
 
-        T &operator*() const
-        {
+        // TODO implement Iterator
+        Iterator(Node* node) : current(node) {}
+
+        bool operator==(const Iterator & other) {
+            return this->current == other.current;
+        }
+
+        Iterator& operator++() {
+            if (current) current = current->next;
+            return *this;
+        }
+
+        T& operator*() {
             return current->data;
         }
-
-        Iterator &operator++()
-        {
-            current = current->next;
-            return *this;
-        }
-
-        Iterator &operator--()
-        {
-            current = current->prev;
-            return *this;
-        }
-
-        bool operator==(const Iterator &other) const
-        {
-            return current == other.current;
-        }
-
-        bool operator!=(const Iterator &other) const
-        {
+        bool operator!=(const Iterator& other) const {
             return current != other.current;
         }
     };
 
-    Iterator begin() const
-    {
-        return Iterator(head->next);
-    }
+    Iterator begin() const { return Iterator(head); }
 
-    Iterator end() const
-    {
-        return Iterator(tail);
-    }
+    Iterator end() const { return Iterator(nullptr); }
 };
+
 #endif // __DOUBLY_LINKED_LIST_H__
