@@ -26,7 +26,8 @@ DoublyLinkedList<T>::~DoublyLinkedList() {
 template <typename T>
 void DoublyLinkedList<T>::insertAtHead(T data) {
     if (head == nullptr) {
-        head = tail = new Node(data);
+        Node* newNode = new Node(data);
+        head = tail = newNode;
     }
     else {
         Node* newNode = new Node(data, nullptr, head);
