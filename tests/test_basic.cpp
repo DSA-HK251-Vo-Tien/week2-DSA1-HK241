@@ -84,34 +84,42 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
     }
 }
 
+static std::string intToStringLocal(int &x) { return std::to_string(x); }
+
 TEST_SUITE("DoublyLinkedList Edge Cases & Utilities")
 {
-    TEST_CASE("insertAt - boundaries and invalid indices")
+    TEST_CASE("insertAt - boundaries [0, length] and invalid indices")
     {
         DoublyLinkedList<int> list;
-        // Danh sách rỗng: insertAt(0, x) theo implement hiện tại là invalid (index >= length)
-        CHECK_THROWS_AS(list.insertAt(0, 1), std::out_of_range);
 
-        // Chuẩn bị [10]
-        list.insertAtHead(10);
+        // insertAt allowed at 0 when empty
+        list.insertAt(0, 1);                 // [1]
         CHECK(list.size() == 1);
-        // insertAt(-1, x) invalid
-        CHECK_THROWS_AS(list.insertAt(-1, 99), std::out_of_range);
-        // insertAt(1, x) invalid vì length == 1, index >= length
-        CHECK_THROWS_AS(list.insertAt(1, 99), std::out_of_range);
 
-        // Thêm vào đầu qua insertAt(0, x): hợp lệ vì 0 < length (length=1)
-        list.insertAt(0, 5); // [5, 10]
+        // invalid indices
+        CHECK_THROWS_AS(list.insertAt(-1, 99), std::out_of_range);
+        CHECK_THROWS_AS(list.insertAt(3, 99), std::out_of_range); // length==1
+
+        // insert at head (index 0)
+        list.insertAt(0, 5);                 // [5,1]
         CHECK(list.size() == 2);
         CHECK(list.get(0) == 5);
-        CHECK(list.get(1) == 10);
+        CHECK(list.get(1) == 1);
 
-        // Thêm vào giữa: index=1
-        list.insertAt(1, 7); // [5, 7, 10]
+        // insert in the middle
+        list.insertAt(1, 7);                 // [5,7,1]
         CHECK(list.size() == 3);
         CHECK(list.get(0) == 5);
         CHECK(list.get(1) == 7);
-        CHECK(list.get(2) == 10);
+        CHECK(list.get(2) == 1);
+
+        // insert at tail (index == length)
+        list.insertAt(3, 10);                // [5,7,1,10]
+        CHECK(list.size() == 4);
+        CHECK(list.get(0) == 5);
+        CHECK(list.get(1) == 7);
+        CHECK(list.get(2) == 1);
+        CHECK(list.get(3) == 10);
     }
 
     TEST_CASE("deleteAt - boundaries and invalid indices")
@@ -206,12 +214,12 @@ TEST_SUITE("DoublyLinkedList Edge Cases & Utilities")
     {
         DoublyLinkedList<int> list;
         list.insertAtTail(9);
-        list.insertAtTail(8); // [9,8]
+        list.insertAtTail(8);
 
-        CHECK(list.toString() == "function error");
+        // default converter prints ints
+        CHECK(list.toString() == "[9, 8]");
 
-        // Có converter
-        std::string s = list.toString(intToString);
+        std::string s = list.toString(intToStringLocal);
         CHECK(s == "[9, 8]");
     }
 
