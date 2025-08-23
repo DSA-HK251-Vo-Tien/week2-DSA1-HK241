@@ -23,7 +23,7 @@ private:
 
 public:
     DoublyLinkedList(){};
-    ~DoublyLinkedList();
+    ~DoublyLinkedList(){};
 
     void insertAtHead(T data);
     void insertAtTail(T data);
