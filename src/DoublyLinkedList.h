@@ -6,6 +6,8 @@
 template <typename T>
 class DoublyLinkedList
 {
+    int another;
+    
     // TODO: may provide some attributes
 private:
     struct Node
