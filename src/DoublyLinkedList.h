@@ -7,7 +7,6 @@ template <typename T>
 class DoublyLinkedList
 {
     int another;
-    int whathappen;
     
     // TODO: may provide some attributes
 private:
