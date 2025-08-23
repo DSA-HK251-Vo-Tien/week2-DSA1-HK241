@@ -6,6 +6,7 @@
 template <typename T>
 class DoublyLinkedList
 {
+    
     // TODO: may provide some attributes
 private:
     struct Node
@@ -17,8 +18,8 @@ private:
         Node(const T &val, Node *prev = nullptr, Node *next = nullptr) : data(val), prev(prev), next(next) {}
     };
 
-    Node *head; // Dummy head
-    Node *tail; // Dummy tail
+Node *head;
+    Node *tail;
     int length;
 
 public:
@@ -40,46 +41,34 @@ public:
     {
     private:
         Node *current;
+        const DoublyLinkedList<T> *list;
 
     public:
-        Iterator(Node *node) : current(node) {}
-
-        T &operator*() const
-        {
-            return current->data;
+        Iterator(Node *node, const DoublyLinkedList<T> *list) : current(node), list(list) {}
+        bool operator!=(const Iterator& other )const {
+        return current != other.current;
+        } // toan tu khac
+        T& operator*() const{
+        return current->data;
+        }
+        Iterator& operator++(){
+        if(current ) current = current->next;
+        return *this;
         }
 
-        Iterator &operator++()
-        {
-            current = current->next;
-            return *this;
-        }
 
-        Iterator &operator--()
-        {
-            current = current->prev;
-            return *this;
-        }
-
-        bool operator==(const Iterator &other) const
-        {
-            return current == other.current;
-        }
-
-        bool operator!=(const Iterator &other) const
-        {
-            return current != other.current;
-        }
+        // TODO implement Iterator
     };
 
     Iterator begin() const
     {
-        return Iterator(head->next);
+        return Iterator(head->next, this);
     }
 
     Iterator end() const
     {
-        return Iterator(tail);
+        return Iterator(tail, this);
     }
 };
+
 #endif // __DOUBLY_LINKED_LIST_H__
