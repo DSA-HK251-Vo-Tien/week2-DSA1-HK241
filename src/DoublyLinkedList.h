@@ -12,6 +12,8 @@ private:
     {
         T data;
         Node *prev;
+        int a;
+        
         Node *next;
         Node() : prev(nullptr), next(nullptr) {}
         Node(const T &val, Node *prev = nullptr, Node *next = nullptr) : data(val), prev(prev), next(next) {}
