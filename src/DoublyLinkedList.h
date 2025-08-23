@@ -22,7 +22,9 @@ private:
     int length;
 
 public:
-    DoublyLinkedList();
+    DoublyLinkedList(){
+        
+    };
     ~DoublyLinkedList();
 
     void insertAtHead(T data);
