@@ -110,15 +110,15 @@ void reverse() {
     Node* curr = head;
     
     while (curr != nullptr) {
-        Node* temp = curr->next;
+        Node* tmp = curr->next;
         curr->next = curr->prev;
-        curr->prev = temp;
-        curr = temp; 
+        curr->prev = tmp;
+        curr = tmp; 
     }
 
-    Node* temp = head;
+    Node* tmp = head;
     head = tail;
-    tail = temp;
+    tail = tmp;
 }
 
 string toString(string (*convert2str)(T&) ) const {
