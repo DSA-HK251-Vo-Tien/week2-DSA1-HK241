@@ -55,10 +55,24 @@ public:
             return *this;
         }
 
+        Iterator operator++(int)
+        {
+            Iterator tmp = *this;
+            ++(*this);
+            return tmp;
+        }
+
         Iterator &operator--()
         {
             current = current->prev;
             return *this;
+        }
+
+        Iterator operator--(int)
+        {
+            Iterator tmp = *this;
+            --(*this);
+            return tmp;
         }
 
         bool operator==(const Iterator &other) const
