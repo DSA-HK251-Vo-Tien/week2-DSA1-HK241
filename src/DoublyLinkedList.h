@@ -22,19 +22,120 @@ private:
     int length;
 
 public:
-    DoublyLinkedList() {};
-    ~DoublyLinkedList();
+DoublyLinkedList() : length(0)
+{
+    head = new Node(); // dummy head
+    tail = new Node(); // dummy tail
+    head->next = tail;
+    tail->prev = head;
+}
 
-    void insertAtHead(T data);
-    void insertAtTail(T data);
-    void insertAt(int index, T data);
-    void deleteAt(int index);
-    T &get(int index) const;
-    int indexOf(T item) const;
-    bool contains(T item) const;
-    int size() const;
-    void reverse();
-    string toString(string (*convert2str)(T &) = 0) const;
+// TODO implement DoublyLinkedList
+~DoublyLinkedList() {
+    Node* curr = head;
+    while (curr != nullptr) {
+        Node* tmp = curr;
+        curr = curr->next;
+        delete tmp;
+    }
+}
+
+void insertAtHead(T data) {
+    Node* newNode = new Node(data, head, head->next);
+    head->next->prev = newNode;
+    head->next = newNode;
+    length++;
+}
+
+void insertAtTail(T data) {
+    Node* newNode = new Node(data, tail->prev, tail);
+    tail->prev->next = newNode;
+    tail->prev = newNode;
+    length++;
+}
+
+void insertAt(int index, T data) {
+    if (index < 0 || index > length) throw::out_of_range("Index is invalid!");
+    Node* curr = head;
+    for (int i = 0; i < index; i++) {
+        curr = curr->next;
+    }
+    Node* newNode = new Node(data, curr, curr->next);
+    curr->next->prev = newNode;
+    curr->next = newNode;
+    length++;
+}
+
+void deleteAt(int index) {
+    if (index < 0 || index >= length) throw::out_of_range("Index is invalid!");
+    Node* curr = head->next;
+    for (int i = 0; i < index; i++) {
+        curr = curr->next;
+    }
+    curr->prev->next = curr->next;
+    curr->next->prev = curr->prev;
+    delete curr;
+    length--;
+}
+
+T& get(int index) const {
+    if (index < 0 || index >= length) throw::out_of_range("Index is invalid!");
+    Node* curr = head->next;
+    for (int i = 0; i < index; i++) {
+        curr = curr->next;
+    }
+    return curr->data;
+}
+
+int indexOf(T item) const {
+    Node* curr = head->next;
+    int index = 0;
+    while (curr != tail) {
+        if (curr->data == item) return index;
+        curr = curr->next;
+        index++;
+    }
+    return -1;
+}
+
+bool contains(T item) const {
+    return indexOf(item) != -1;
+}
+
+int size() const {
+    return length;
+}
+
+void reverse() {
+    Node* curr = head;
+    
+    while (curr != nullptr) {
+        Node* temp = curr->next;
+        curr->next = curr->prev;
+        curr->prev = temp;
+        curr = temp; 
+    }
+
+    Node* temp = head;
+    head = tail;
+    tail = temp;
+}
+
+string toString(string (*convert2str)(T&) ) const {
+    stringstream ss;
+    ss << "[";
+    Node* curr = head->next;
+    while (curr != tail) {
+        if (convert2str != nullptr) {
+            ss << convert2str(curr->data);
+        }
+        else ss << curr->data;
+        if (curr->next != tail) ss << ", ";
+        curr = curr->next;
+    }
+    ss << "]";
+    return ss.str();
+}
 
     class Iterator
     {
