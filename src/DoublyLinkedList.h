@@ -6,271 +6,56 @@
 template <typename T>
 class DoublyLinkedList
 {
-    // TODO: may provide some attributes
 private:
-    struct Node
-    {
+    struct Node {
         T data;
-        Node *prev;
-        Node *next;
-        Node() : prev(nullptr), next(nullptr) {}
-        Node(const T &val, Node *prev = nullptr, Node *next = nullptr) : data(val), prev(prev), next(next) {}
+        Node* prev;
+        Node* next;
+        Node() : data(T()), prev(nullptr), next(nullptr) {}
+        Node(const T& val, Node* prev = nullptr, Node* next = nullptr)
+            : data(val), prev(prev), next(next) {}
     };
 
-    Node *head; // Dummy head
-    Node *tail; // Dummy tail
+    Node* head; // dummy head
+    Node* tail; // dummy tail
     int length;
 
 public:
-    DoublyLinkedList()
-    {
-        head = new Node(); // dummy head
-        tail = new Node(); // dummy tail
-        head->next = tail;
-        tail->prev = head;
-        length = 0;
-    }
-    ~DoublyLinkedList()
-    {
-        Node *current = head;
-        while (current != nullptr)
-        {
-            Node *nextNode = current->next;
-            delete current;
-            current = nextNode;
-        }
-    }
+    DoublyLinkedList();
+    ~DoublyLinkedList();
 
-    DoublyLinkedList(const DoublyLinkedList &other) : DoublyLinkedList()
-    {
-        for (Node *cur = other.head->next; cur != other.tail; cur = cur->next)
-        {
-            insertAtTail(cur->data);
-        }
-    }
+    // rule of 3
+    DoublyLinkedList(const DoublyLinkedList& other);
+    DoublyLinkedList& operator=(const DoublyLinkedList& other);
 
-    // Copy assignment (deep copy)
-    DoublyLinkedList &operator=(const DoublyLinkedList &other)
-    {
-        if (this != &other)
-        {
-            clear();
-            for (Node *cur = other.head->next; cur != other.tail; cur = cur->next)
-            {
-                insertAtTail(cur->data);
-            }
-        }
-        return *this;
-    }
+    void insertAtHead(T data);
+    void insertAtTail(T data);
+    void insertAt(int index, T data);
+    void deleteAt(int index);
+    T& get(int index) const;
+    int indexOf(T item) const;
+    bool contains(T item) const;
+    int size() const;
+    void reverse();
+    void clear();
+    std::string toString(std::string (*convert2str)(T&) = nullptr) const;
 
-    void insertAtHead(T data)
-    {
-        Node *newNode = new Node(data);
-        newNode->next = head->next;
-        newNode->prev = head;
-        head->next->prev = newNode;
-        head->next = newNode;
-        length++;
-    }
-    void insertAtTail(T data)
-    {
-        Node *newNode = new Node(data);
-        newNode->next = tail;
-        newNode->prev = tail->prev;
-        tail->prev->next = newNode;
-        tail->prev = newNode;
-        length++;
-    }
-    void insertAt(int index, T data)
-    {
-        if (index < 0 || index >= length)
-            throw std::out_of_range("Index out ouf range!");
-
-        if (index == 0)
-        {
-            this->insertAtHead(data);
-            return;
-        }
-        if (index == length)
-        {
-            this->insertAtTail(data);
-            return;
-        }
-
-        Node *pos = head->next;
-        for (int i = 0; i < index; i++)
-            pos = pos->next;
-
-        Node *newNode = new Node(data);
-        newNode->next = pos;
-        newNode->prev = pos->prev;
-        pos->prev->next = newNode;
-        pos->prev = newNode;
-        length++;
-    }
-    void deleteAt(int index)
-    {
-        if (index < 0 || index >= length)
-            throw std::out_of_range("Index out of range!");
-
-        Node *pos = head->next;
-        for (int i = 0; i < index; i++)
-            pos = pos->next;
-
-        pos->next->prev = pos->prev;
-        pos->prev->next = pos->next;
-        delete pos;
-        length--;
-    }
-    T &get(int index) const
-    {
-        if (index < 0 || index >= length)
-            throw std::out_of_range("Index out of range!");
-
-        Node *pos = head->next;
-        for (int i = 0; i < index; i++)
-            pos = pos->next;
-
-        return pos->data;
-    }
-    int indexOf(T item) const
-    {
-        int index = 0;
-        for (Iterator it = this->begin(); it != this->end(); it++, index++)
-        {
-            if (*it == item)
-                return index;
-        }
-        return -1;
-    }
-    bool contains(T item) const
-    {
-        if (this->indexOf(item) != -1)
-            return true;
-
-        return false;
-    }
-    int size() const
-    {
-        return length;
-    }
-    void reverse()
-    {
-        Node *cur = head;
-        while (cur != nullptr)
-        {
-            Node *tmp = cur->next;
-            cur->next = cur->prev;
-            cur->prev = tmp;
-            cur = tmp;
-        }
-        Node *tempHead = head;
-        head = tail;
-        tail = tempHead;
-    }
-
-    void clear()
-    {
-        Node *cur = head->next;
-        while (cur != tail)
-        {
-            Node *nextNode = cur->next;
-            delete cur;
-            cur = nextNode;
-        }
-        head->next = tail;
-        tail->prev = head;
-        length = 0;
-    }
-    string toString(string (*convert2str)(T &) = 0) const
-    {
-        std::ostringstream oss;
-        oss << "[";
-
-        Node *cur = head->next;
-        bool first = true;
-        while (cur != tail)
-        {
-            if (!first)
-                oss << ", ";
-            first = false;
-
-            if (convert2str)
-            {
-                // Hàm toString là const, convert2str nhận T& non-const nên cần const_cast
-                T &ref = const_cast<T &>(cur->data);
-                oss << convert2str(ref);
-            }
-            else
-            {
-                // Mặc định: yêu cầu T có operator<<
-                oss << cur->data;
-            }
-
-            cur = cur->next;
-        }
-        oss << "]";
-        return oss.str();
-    }
-
-    class Iterator
-    {
+    class Iterator {
     private:
-        Node *current;
-
+        Node* current;
     public:
-        Iterator(Node *node) : current(node) {}
-
-        T &operator*() const
-        {
-            return current->data;
-        }
-
-        Iterator &operator++()
-        {
-            current = current->next;
-            return *this;
-        }
-
-        Iterator operator++(int)
-        {
-            Iterator tmp = *this;
-            current = current->next;
-            return tmp;
-        }
-
-        Iterator &operator--()
-        {
-            current = current->prev;
-            return *this;
-        }
-
-        Iterator operator--(int)
-        {
-            Iterator tmp = *this;
-            current = current->prev;
-            return tmp;
-        }
-
-        bool operator==(const Iterator &other) const
-        {
-            return current == other.current;
-        }
-
-        bool operator!=(const Iterator &other) const
-        {
-            return current != other.current;
-        }
+        Iterator(Node* node) : current(node) {}
+        T& operator*() const { return current->data; }
+        Iterator& operator++() { current = current->next; return *this; }
+        Iterator operator++(int) { Iterator tmp=*this; current=current->next; return tmp; }
+        Iterator& operator--() { current = current->prev; return *this; }
+        Iterator operator--(int) { Iterator tmp=*this; current=current->prev; return tmp; }
+        bool operator==(const Iterator& other) const { return current == other.current; }
+        bool operator!=(const Iterator& other) const { return current != other.current; }
     };
 
-    Iterator begin() const
-    {
-        return Iterator(head->next);
-    }
-
-    Iterator end() const
-    {
-        return Iterator(tail);
-    }
+    Iterator begin() const { return Iterator(head->next); }
+    Iterator end() const { return Iterator(tail); }
 };
+
 #endif // __DOUBLY_LINKED_LIST_H__
