@@ -168,6 +168,20 @@ public:
         head = tail;
         tail = tempHead;
     }
+
+    void clear()
+    {
+        Node *cur = head->next;
+        while (cur != tail)
+        {
+            Node *nextNode = cur->next;
+            delete cur;
+            cur = nextNode;
+        }
+        head->next = tail;
+        tail->prev = head;
+        length = 0;
+    }
     string toString(string (*convert2str)(T &) = 0) const
     {
         std::ostringstream oss;
