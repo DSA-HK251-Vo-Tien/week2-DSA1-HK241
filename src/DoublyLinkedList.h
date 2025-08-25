@@ -41,8 +41,27 @@ public:
         }
     }
 
-    DoublyLinkedList(const DoublyLinkedList &) = delete;
-    DoublyLinkedList &operator=(const DoublyLinkedList &) = delete;
+    DoublyLinkedList(const DoublyLinkedList &other) : DoublyLinkedList()
+    {
+        for (Node *cur = other.head->next; cur != other.tail; cur = cur->next)
+        {
+            insertAtTail(cur->data);
+        }
+    }
+
+    // Copy assignment (deep copy)
+    DoublyLinkedList &operator=(const DoublyLinkedList &other)
+    {
+        if (this != &other)
+        {
+            clear();
+            for (Node *cur = other.head->next; cur != other.tail; cur = cur->next)
+            {
+                insertAtTail(cur->data);
+            }
+        }
+        return *this;
+    }
 
     void insertAtHead(T data)
     {
