@@ -24,13 +24,10 @@ private:
 public:
     DoublyLinkedList()
     {
-        Node *current = head;
-        while (current != nullptr)
-        {
-            Node *nextNode = current->next;
-            delete current;
-            current = nextNode;
-        }
+        head = new Node(); // dummy head
+        tail = new Node(); // dummy tail
+        head->next = tail;
+        tail->prev = head;
     }
     ~DoublyLinkedList()
     {
