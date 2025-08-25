@@ -22,19 +22,161 @@ private:
     int length;
 
 public:
-    DoublyLinkedList();
-    ~DoublyLinkedList();
+    DoublyLinkedList()
+    {
+        Node *current = head;
+        while (current != nullptr)
+        {
+            Node *nextNode = current->next;
+            delete current;
+            current = nextNode;
+        }
+    }
+    ~DoublyLinkedList()
+    {
+        Node *newNode = new Node(data);
+        newNode->next = head->next;
+        newNode->prev = head;
+        head->next->prev = newNode;
+        head->next = newNode;
+        length++;
+    }
 
-    void insertAtHead(T data);
-    void insertAtTail(T data);
-    void insertAt(int index, T data);
-    void deleteAt(int index);
-    T &get(int index) const;
-    int indexOf(T item) const;
-    bool contains(T item) const;
-    int size() const;
-    void reverse();
-    string toString(string (*convert2str)(T &) = 0) const;
+    void insertAtHead(T data)
+    {
+        Node *newNode = new Node(data);
+        newNode->next = head->next;
+        newNode->prev = head;
+        head->next->prev = newNode;
+        head->next = newNode;
+        length++;
+    }
+    void insertAtTail(T data)
+    {
+        Node *newNode = new Node(data);
+        newNode->next = tail;
+        newNode->prev = tail->prev;
+        tail->prev->next = newNode;
+        tail->prev = newNode;
+        length++;
+    }
+    void insertAt(int index, T data)
+    {
+        if (index < 0 || index >= length)
+            throw std::out_of_range("Index out ouf range!");
+
+        if (index == 1)
+        {
+            this->insertAtHead(data);
+            return;
+        }
+        if (index == length)
+        {
+            this->insertAtTail(data);
+            return;
+        }
+
+        Node *pos = head->next;
+        for (int i = 0; i < index; i++)
+            pos = pos->next;
+
+        Node *newNode = new Node(data);
+        newNode->next = pos;
+        newNode->prev = pos->prev;
+        pos->prev->next = newNode;
+        pos->prev = newNode;
+        length++;
+    }
+    void deleteAt(int index)
+    {
+        if (index < 0 || index >= length)
+            throw std::out_of_range("Index out of range!");
+
+        Node *pos = head->next;
+        for (int i = 0; i < index; i++)
+            pos = pos->next;
+
+        pos->next->prev = pos->prev;
+        pos->prev->next = pos->next;
+        delete pos;
+        length--;
+    }
+    T &get(int index) const
+    {
+        if (index < 0 || index >= length)
+            throw std::out_of_range("Index out of range!");
+
+        Node *pos = head->next;
+        for (int i = 0; i < length; i++)
+            pos = pos->next;
+
+        return pos->data;
+    }
+    int indexOf(T item) const
+    {
+        int index = 0;
+        for (Iterator it = this->begin(); it != this->end(); it++, index++)
+        {
+            if (*it == item)
+                return index;
+        }
+        return -1;
+    }
+    bool contains(T item) const
+    {
+        if (this->indexOf(item) != -1)
+            return true;
+
+        return false;
+    }
+    int size() const
+    {
+        return length;
+    }
+    void reverse()
+    {
+        Node *cur = head;
+        while (cur != nullptr)
+        {
+            Node *tmp = cur->next;
+            cur->next = cur->prev;
+            cur->prev = tmp;
+            cur = tmp;
+        }
+        Node *tempHead = head;
+        head = tail;
+        tail = tempHead;
+    }
+    string toString(string (*convert2str)(T &) = 0) const
+    {
+        std::ostringstream oss;
+        oss << "[";
+
+        Node *cur = head->next;
+        bool first = true;
+        while (cur != tail)
+        {
+            if (!first)
+                oss << ", ";
+            first = false;
+
+            if (convert2str)
+            {
+                // Hàm toString là const, convert2str nhận T& non-const nên cần const_cast
+                T &ref = const_cast<T &>(cur->data);
+                oss << convert2str(ref);
+            }
+            else
+            {
+                // Mặc định: yêu cầu T có operator<<
+                oss << cur->data;
+            }
+
+            cur = cur->next;
+        }
+        oss << "]";
+        return oss.str();
+    }
 
     class Iterator
     {
@@ -42,7 +184,6 @@ public:
         Node *current;
 
     public:
-
         Iterator(Node *node) : current(node) {}
 
         T &operator*() const
