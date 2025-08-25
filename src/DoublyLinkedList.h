@@ -34,12 +34,13 @@ public:
     }
     ~DoublyLinkedList()
     {
-        Node *newNode = new Node(data);
-        newNode->next = head->next;
-        newNode->prev = head;
-        head->next->prev = newNode;
-        head->next = newNode;
-        length++;
+        Node *current = head;
+        while (current != nullptr)
+        {
+            Node *nextNode = current->next;
+            delete current;
+            current = nextNode;
+        }
     }
 
     void insertAtHead(T data)
@@ -147,36 +148,7 @@ public:
         head = tail;
         tail = tempHead;
     }
-    string toString(string (*convert2str)(T &) = 0) const
-    {
-        std::ostringstream oss;
-        oss << "[";
-
-        Node *cur = head->next;
-        bool first = true;
-        while (cur != tail)
-        {
-            if (!first)
-                oss << ", ";
-            first = false;
-
-            if (convert2str)
-            {
-                // Hàm toString là const, convert2str nhận T& non-const nên cần const_cast
-                T &ref = const_cast<T &>(cur->data);
-                oss << convert2str(ref);
-            }
-            else
-            {
-                // Mặc định: yêu cầu T có operator<<
-                oss << cur->data;
-            }
-
-            cur = cur->next;
-        }
-        oss << "]";
-        return oss.str();
-    }
+    string toString(string (*convert2str)(T &) = 0) const;
 
     class Iterator
     {
