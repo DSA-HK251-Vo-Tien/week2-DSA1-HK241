@@ -28,6 +28,7 @@ public:
         tail = new Node(); // dummy tail
         head->next = tail;
         tail->prev = head;
+        length = 0;
     }
     ~DoublyLinkedList()
     {
@@ -63,7 +64,7 @@ public:
         if (index < 0 || index >= length)
             throw std::out_of_range("Index out ouf range!");
 
-        if (index == 1)
+        if (index == 0)
         {
             this->insertAtHead(data);
             return;
@@ -105,7 +106,7 @@ public:
             throw std::out_of_range("Index out of range!");
 
         Node *pos = head->next;
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < index; i++)
             pos = pos->next;
 
         return pos->data;
