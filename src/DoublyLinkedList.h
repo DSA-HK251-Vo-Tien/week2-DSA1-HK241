@@ -21,12 +21,8 @@ class DoublyLinkedList {
   int length;
 
  public:
-  DoublyLinkedList() {
-    // test..
-  }
-  ~DoublyLinkedList() {
-    // asdqwe//
-  }
+  DoublyLinkedList();
+  ~DoublyLinkedList();
 
   void insertAtHead(T data);
   void insertAtTail(T data);
