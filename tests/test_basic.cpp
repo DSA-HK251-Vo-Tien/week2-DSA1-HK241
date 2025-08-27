@@ -83,3 +83,93 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
 }
 
 // TODO add test case
+TEST_SUITE("DoublyLinkedList Other Operations")
+{
+    TEST_CASE("Index of and contains")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        list.insertAtTail(3); // [1, 2, 3]
+
+        SUBCASE("Index of existing element")
+        {
+            CHECK(list.indexOf(2) == 1);
+        }
+
+        SUBCASE("Index of non-existing element")
+        {
+            CHECK(list.indexOf(4) == -1);
+        }
+
+        SUBCASE("Contains existing element")
+        {
+            CHECK(list.contains(3) == true);
+        }
+
+        SUBCASE("Contains non-existing element")
+        {
+            CHECK(list.contains(5) == false);
+        }
+    }
+
+    TEST_CASE("Insert middle")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(3); // [1, 3]
+
+        SUBCASE("Insert at valid middle index")
+        {
+            list.insertAt(1, 2); // [1, 2, 3]
+            CHECK(list.size() == 3);
+            CHECK(list.get(1) == 2);
+        }
+
+        SUBCASE("Insert at invalid index")
+        {
+            CHECK_THROWS_AS(list.insertAt(5, 4), std::out_of_range);
+        }
+    }
+
+    TEST_CASE("Different data")
+    {
+        DoublyLinkedList<std::string> strList;
+        strList.insertAtTail("hello");
+        strList.insertAtTail("world");
+        CHECK(strList.size() == 2);
+        CHECK(strList.get(0) == "hello");
+        CHECK(strList.get(1) == "world");
+
+        DoublyLinkedList<double> doubleList;
+        doubleList.insertAtTail(1.1);
+        doubleList.insertAtTail(2.2);
+        CHECK(doubleList.size() == 2);
+        CHECK(doubleList.get(0) == doctest::Approx(1.1));
+        CHECK(doubleList.get(1) == doctest::Approx(2.2));
+    }
+
+    TEST_CASE("Empty list behavior") 
+    {
+        DoublyLinkedList<int> list;
+
+        CHECK(list.size() == 0);
+        CHECK_THROWS_AS(list.get(0), std::out_of_range);
+        CHECK_THROWS_AS(list.deleteAt(0), std::out_of_range);
+
+        list.reverse();
+        CHECK(list.size() == 0);
+    }
+
+    TEST_CASE("Single element behavior") {
+        DoublyLinkedList<int> list;
+        list.insertAtHead(42);
+
+        CHECK(list.size() == 1);
+        list.reverse();
+        CHECK(list.get(0) == 42);
+
+        list.deleteAt(0);
+        CHECK(list.size() == 0);
+    }
+}
