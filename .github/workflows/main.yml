@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: 📤 Send Discord notification
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.WEB_HOOK_THREAD }}
+          DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/1399725959741046875/pnpqYsIHFkx0c078DB0UsnszXVvlT71JOWmcK-0ZSC-tAiFyCaEnrgt-ABFcg8aq1r2Y?thread_id=1399727137954729994"
         run: |
           AUTHOR_NAME="${{ github.actor }}"
           EVENT_NAME="${{ github.event_name }}"
