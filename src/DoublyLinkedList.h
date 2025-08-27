@@ -22,16 +22,10 @@ private:
     int length;
 
 public:
-    DoublyLinkedList(){
+    DoublyLinkedList(){};
+    ~DoublyLinkedList(){};
 
-    }
-    ~DoublyLinkedList(){
-
-    }
-
-    void insertAtHead(T data){
-
-    }
+    void insertAtHead(T data);
     void insertAtTail(T data);
     void insertAt(int index, T data);
     void deleteAt(int index);
