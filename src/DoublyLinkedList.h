@@ -22,8 +22,23 @@ private:
     int length;
 
 public:
-    DoublyLinkedList();
-    ~DoublyLinkedList();
+    DoublyLinkedList()
+    {
+        head = new Node(T()); // Dummy head
+        tail = new Node(T()); // Dummy tail
+        head->next = tail;
+        tail->prev = head;
+    }
+    ~DoublyLinkedList()
+    {
+        Node *current = head;
+        while (current != nullptr)
+        {
+            Node *next = current->next;
+            delete current;
+            current = next;
+        }
+    }
 
     void insertAtHead(T data);
     void insertAtTail(T data);
