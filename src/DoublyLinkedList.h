@@ -23,6 +23,7 @@ private:
 
 public:
     DoublyLinkedList(){
+        length = 0;
         head = new Node(); // dummy head
     tail = new Node(); // dummy tail
     head->next = tail;
