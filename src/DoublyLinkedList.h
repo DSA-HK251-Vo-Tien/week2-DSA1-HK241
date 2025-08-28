@@ -22,21 +22,144 @@ private:
     int length;
 
 public:
-    DoublyLinkedList(){};
-    ~DoublyLinkedList(){};
+    DoublyLinkedList(){
+        head = new Node(); // dummy head
+    tail = new Node(); // dummy tail
+    head->next = tail;
+    tail->prev = head;
+    }
+
+    ~DoublyLinkedList(){
+        Node* current = head->next;
+    while (current != tail) {
+        Node* nextNode = current->next;
+        delete current;
+        current = nextNode;
+    }
+    // Sau khi đã xóa hết các nút thật, tiến hành xóa hai nút dummy
+    delete head;
+    delete tail;
+    // Đặt head và tail về nullptr để tránh sử dụng các con trỏ đã bị xóa
+    head = nullptr;
+    tail = nullptr;
+    }
 
     void insertAtHead(T data) {
-        std::cout<<"insertAtHead"<<endl;
+        Node* newNode = new Node(data);
+    newNode->next = head->next;
+    newNode->prev = head;
+    head->next->prev = newNode;
+    head->next = newNode;
+    length++;
     }
-    void insertAtTail(T data) {};
-    void insertAt(int index, T data) {};
-    void deleteAt(int index);
-    T &get(int index) const;
-    int indexOf(T item) const;
-    bool contains(T item) const;
-    int size() const;
-    void reverse();
-    string toString(string (*convert2str)(T &) = 0) const;
+
+    void insertAtTail(T data) {
+        Node* newNode = new Node(data);
+    newNode->prev = tail->prev;
+    newNode->next = tail;
+    tail->prev->next = newNode;
+    tail->prev = newNode;
+    length++;
+    }
+
+    void insertAt(int index, T data) {
+        if (index < 0 || index > length) {
+        throw out_of_range("Index out of range");
+    }
+    Node* newNode = new Node(data);
+    Node* current = head;
+    for (int i = 0; i < index; i++) {
+        current = current->next;
+    }
+    newNode->next = current->next;
+    newNode->prev = current;
+    current->next->prev = newNode;
+    current->next = newNode;
+    length++;
+    }
+
+    void deleteAt(int index){
+        if (index < 0 || index >= length) {
+        throw out_of_range("Index out of range");
+    }
+    Node* current = head->next;
+    for (int i = 0; i < index; i++) {
+        current = current->next;
+    }
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
+    delete current;
+    length--;
+    }
+    T &get(int index) const{
+        if (index < 0 || index >= length) {
+        throw out_of_range("Index out of range");
+    }
+    Node* current = head->next;
+    for (int i = 0; i < index; i++) {
+        current = current->next;
+    }
+    return current->data;
+    }
+    int indexOf(T item) const{
+        Node* current = head->next;
+    int index = 0;
+    while (current != tail) {
+        if (current->data == item) {
+            return index;
+        }
+        current = current->next;
+        index++;
+    }
+    return -1; 
+    }
+    bool contains(T item) const{
+        return indexOf(item) != -1;
+    }
+    int size() const{
+        return length;
+    }
+    void reverse(){
+        Node* current = head;
+    Node* temp = nullptr;
+    // Swap next and prev for all nodes
+    while (current != nullptr) {
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        current = current->prev; // Move to the next node (which is prev due to swap)
+    }
+    // Swap head and tail
+    temp = head;
+    head = tail;
+    tail = temp;
+    }
+    string toString(string (*convert2str)(T &) = 0) const{
+        std::string result = "[";
+    Node* current = head->next;
+    while (current != tail) {
+        if (convert2str) {
+            result += convert2str(current->data);
+        } else {
+            if constexpr (std::is_same_v<T, std::string> || std::is_same_v<T, char>) {
+                result += current->data;
+            } else if constexpr (std::is_integral_v<T> || std::is_floating_point_v<T>) {
+                result += std::to_string(current->data);
+            } else {
+                // fallback dùng operator<<
+                std::ostringstream oss;
+                oss << current->data;
+                result += oss.str();
+            }
+        }
+        if (current->next != tail) {
+            result += ", ";
+        }
+        current = current->next;
+    }
+    result += "]";
+    return result;
+    }
     class Iterator
     {
     private:
@@ -52,14 +175,40 @@ public:
 
         Iterator &operator++()
         {
-            current = current->next;
-            return *this;
+            if (current == nullptr || current->next == nullptr) {
+                throw cursor_error("Iterator out of bounds: cannot increment past the end.");
+            }
+            else 
+            {
+                current = current->next;
+                return *this;
+            }
+        }
+
+        Iterator operator++(int)
+        {
+            Iterator tmp = *this;
+            ++(*this);
+            return tmp;
         }
 
         Iterator &operator--()
         {
-            current = current->prev;
-            return *this;
+            if (current == nullptr || current->prev == nullptr) {
+                throw cursor_error("Iterator out of bounds: cannot decrement past the beginning.");
+            }
+            else 
+            {
+                current = current->prev;
+                return *this;
+            }
+        }
+
+        Iterator operator--(int)
+        {
+            Iterator tmp = *this;
+            --(*this);
+            return tmp;
         }
 
         bool operator==(const Iterator &other) const
