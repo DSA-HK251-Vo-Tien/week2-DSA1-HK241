@@ -25,9 +25,11 @@ public:
     DoublyLinkedList(){};
     ~DoublyLinkedList(){};
 
-    void insertAtHead(T data);
-    void insertAtTail(T data);
-    void insertAt(int index, T data);
+    void insertAtHead(T data) {
+        std::cout<<"insertAtHead"<<endl;
+    }
+    void insertAtTail(T data) {};
+    void insertAt(int index, T data) {};
     void deleteAt(int index);
     T &get(int index) const;
     int indexOf(T item) const;
@@ -35,7 +37,6 @@ public:
     int size() const;
     void reverse();
     string toString(string (*convert2str)(T &) = 0) const;
-
     class Iterator
     {
     private:
