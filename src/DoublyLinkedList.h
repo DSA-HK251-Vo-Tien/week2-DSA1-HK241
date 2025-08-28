@@ -22,19 +22,54 @@ private:
     int length;
 
 public:
-    DoublyLinkedList(){}
-    ~DoublyLinkedList(){}
+    DoublyLinkedList(){
+        head = new Node();  // dummy head
+        tail = new Node();  // dummy tail
+        head->next = tail;
+        tail->prev = head;
+        length = 0;
+    }
+    ~DoublyLinkedList(){
+        Node *current = head;
+        while (current != nullptr)
+        {
+            Node *next = current->next;
+            delete current;
+            current = next;
+        }
+    }
 
     void insertAtHead(T data){
-        std:: cout << "Changed";    
+        Node *newNode = new Node(data);
+
+        newNode->next = head->next;
+        newNode->prev = head;
+
+        head->next->prev = newNode;
+        head->next = newNode;
+
+        length++;    
     }
     void insertAtTail(T data);
     void insertAt(int index, T data);
     void deleteAt(int index);
-    T &get(int index) const;
+    T &get(int index) const{
+        if (index < 0 || index >= length)
+            throw std::out_of_range("Index out of range");
+
+        Node *current = head->next;
+        for (int i = 0; i < index; ++i)
+        {
+            current = current->next;
+        }
+
+        return current->data;
+    }
     int indexOf(T item) const;
     bool contains(T item) const;
-    int size() const;
+    int size() const{
+        return length;
+    }
     void reverse();
     string toString(string (*convert2str)(T &) = 0) const;
 
