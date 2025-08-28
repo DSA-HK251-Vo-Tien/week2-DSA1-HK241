@@ -40,7 +40,7 @@ public:
     {
     private:
         Node *current;
-
+        DoublyLinkedList *list;
     public:
         Iterator(Node *node) : current(node) {}
 
