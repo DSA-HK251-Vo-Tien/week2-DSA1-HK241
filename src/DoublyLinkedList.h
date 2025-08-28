@@ -77,12 +77,12 @@ public:
 
     Iterator begin() const
     {
-        return Iterator(head->next, this);
+        return Iterator(head->next);
     }
 
     Iterator end() const
     {
-        return Iterator(tail, this);
+        return Iterator(tail);
     }
 };
 #endif // __DOUBLY_LINKED_LIST_H__
