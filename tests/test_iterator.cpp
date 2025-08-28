@@ -77,7 +77,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
 
             SUBCASE("Range-based for on empty list")
             {
-                for (int x : list)
+                for ([[maybe_unused]] int x : list)
                 {
                     FAIL("Should not enter loop for empty list");
                 }

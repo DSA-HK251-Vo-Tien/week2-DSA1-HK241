@@ -196,28 +196,26 @@ TEST_SUITE("DoublyLinkedList Basic Operations")
             CHECK(list.indexOf(7) == 0);
             CHECK(list.indexOf(8) == 1);
         }
-
-    
-        DoublyLinkedList<int> list;
-
-        SUBCASE("Insert at head")
+        TEST_CASE("Insert at head/tail")
         {
-            list.insertAtHead(2);
-            list.insertAtHead(1);
-            CHECK(list.size() == 2);
-            CHECK(list.get(0) == 1);
-            CHECK(list.get(1) == 2);
-        }
+            DoublyLinkedList<int> list;
 
-        SUBCASE("Insert at tail")
-        {
-            list.insertAtTail(1);
-            list.insertAtTail(2);
-            CHECK(list.size() == 2);
-            CHECK(list.get(0) == 1);
-            CHECK(list.get(1) == 2);
-        }
-    
+            SUBCASE("Insert at head")
+            {
+                list.insertAtHead(2);
+                list.insertAtHead(1);
+                CHECK(list.size() == 2);
+                CHECK(list.get(0) == 1);
+                CHECK(list.get(1) == 2);
+            }
 
-  
+            SUBCASE("Insert at tail")
+            {
+                list.insertAtTail(1);
+                list.insertAtTail(2);
+                CHECK(list.size() == 2);
+                CHECK(list.get(0) == 1);
+                CHECK(list.get(1) == 2);
+            }
+        }
 }
