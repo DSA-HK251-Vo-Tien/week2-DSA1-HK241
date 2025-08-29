@@ -40,9 +40,10 @@ public:
     {
     private:
         Node *current;
-
+        const DoublyLinkedList *list;
     public:
         Iterator(Node *node) : current(node) {}
+        Iterator(Node *node, const DoublyLinkedList *list) : current(node), list(list) {}
 
         T &operator*() const
         {
@@ -51,19 +52,22 @@ public:
 
         Iterator &operator++()
         {
-            current = current->next;
+            if (current != list->tail) {
+                current = current->next;
+            }
             return *this;
         }
 
         Iterator &operator--()
         {
-            current = current->prev;
+            if (current != list->head) {
+                current = current->prev;
+            }
             return *this;
         }
 
-        bool operator==(const Iterator &other) const
-        {
-            return current == other.current;
+        bool operator==(const Iterator& other) const {
+            return current == other.current && list == other.list;
         }
 
         bool operator!=(const Iterator &other) const
@@ -74,12 +78,12 @@ public:
 
     Iterator begin() const
     {
-        return Iterator(head->next);
+        return Iterator(head->next, this);
     }
 
     Iterator end() const
     {
-        return Iterator(tail);
+        return Iterator(tail, this);
     }
 };
 #endif // __DOUBLY_LINKED_LIST_H__
