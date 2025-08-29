@@ -43,7 +43,7 @@ public:
         DoublyLinkedList *list;
     public:
         Iterator(Node *node) : current(node) {}
-        Iterator(Node *node, DoublyLinkedList *list) : current(node), list(list) {}
+        Iterator(Node *node, const DoublyLinkedList *list) : current(node), list(list) {}
 
         T &operator*() const
         {
