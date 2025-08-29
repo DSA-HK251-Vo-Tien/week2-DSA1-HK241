@@ -3,7 +3,6 @@
 
 TEST_SUITE("DoublyLinkedList Basic Operations")
 {
-
     TEST_CASE("Insert at head and tail")
     {
         DoublyLinkedList<int> list;
@@ -82,4 +81,125 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
     }
 }
 
-// TODO add test case
+// ==================== Bổ sung test mới ====================
+
+TEST_SUITE("DoublyLinkedList Extended")
+{
+    TEST_CASE("Insert at index middle")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(3);
+        list.insertAt(1, 2); // [1,2,3]
+        CHECK(list.toString() == "[1, 2, 3]");
+    }
+
+    TEST_CASE("Insert at index 0 behaves like head")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(2);
+        list.insertAt(0, 1);
+        CHECK(list.get(0) == 1);
+    }
+
+    TEST_CASE("Insert at index=size behaves like tail")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtHead(1);
+        list.insertAt(1, 2);
+        CHECK(list.get(1) == 2);
+    }
+
+    TEST_CASE("Insert invalid index throws")
+    {
+        DoublyLinkedList<int> list;
+        CHECK_THROWS(list.insertAt(-1, 5));
+        CHECK_THROWS(list.insertAt(2, 5));
+    }
+
+    TEST_CASE("Delete at head")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        list.deleteAt(0);
+        CHECK(list.get(0) == 2);
+    }
+
+    TEST_CASE("Delete at tail")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        list.deleteAt(1);
+        CHECK(list.size() == 1);
+        CHECK(list.get(0) == 1);
+    }
+
+    TEST_CASE("Delete invalid index throws")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        CHECK_THROWS(list.deleteAt(5));
+    }
+
+    TEST_CASE("Get invalid index throws")
+    {
+        DoublyLinkedList<int> list;
+        CHECK_THROWS(list.get(0));
+    }
+
+    TEST_CASE("IndexOf finds element")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(10);
+        list.insertAtTail(20);
+        CHECK(list.indexOf(20) == 1);
+        CHECK(list.indexOf(99) == -1);
+    }
+
+    TEST_CASE("Contains works")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(5);
+        CHECK(list.contains(5));
+        CHECK_FALSE(list.contains(10));
+    }
+
+    TEST_CASE("Size updates after operations")
+    {
+        DoublyLinkedList<int> list;
+        CHECK(list.size() == 0);
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        CHECK(list.size() == 2);
+        list.deleteAt(1);
+        CHECK(list.size() == 1);
+    }
+
+    TEST_CASE("Reverse empty list safe")
+    {
+        DoublyLinkedList<int> list;
+        list.reverse();
+        CHECK(list.size() == 0);
+    }
+
+    TEST_CASE("Reverse single element safe")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(42);
+        list.reverse();
+        CHECK(list.get(0) == 42);
+    }
+
+    TEST_CASE("ToString with custom convert function")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(7);
+        auto conv = [](int &x)
+        {
+            return string("val=") + to_string(x);
+        };
+        CHECK(list.toString(conv) == "[val=7]");
+    }
+}
