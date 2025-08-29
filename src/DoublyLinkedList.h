@@ -16,7 +16,6 @@ private:
         Node() : prev(nullptr), next(nullptr) {}
         Node(const T &val, Node *prev = nullptr, Node *next = nullptr) : data(val), prev(prev), next(next) {}
     };
-    ///////////////////////////////////////////////////////////////////////////
     Node *head; // Dummy head
     Node *tail; // Dummy tail
     int length;
@@ -30,7 +29,7 @@ public:
     }
 
     void insertAtHead(T data){
-        std::cout<<"change";
+        std::cout<<"changes";
     }
     void insertAtTail(T data);
     void insertAt(int index, T data);
