@@ -16,16 +16,21 @@ private:
         Node() : prev(nullptr), next(nullptr) {}
         Node(const T &val, Node *prev = nullptr, Node *next = nullptr) : data(val), prev(prev), next(next) {}
     };
-
     Node *head; // Dummy head
     Node *tail; // Dummy tail
     int length;
 
 public:
-    DoublyLinkedList();
-    ~DoublyLinkedList();
+    DoublyLinkedList(){
 
-    void insertAtHead(T data);
+    }
+    ~DoublyLinkedList(){
+
+    }
+
+    void insertAtHead(T data){
+        std::cout<<"changesssss";
+    }
     void insertAtTail(T data);
     void insertAt(int index, T data);
     void deleteAt(int index);
