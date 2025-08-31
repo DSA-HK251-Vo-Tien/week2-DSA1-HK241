@@ -306,3 +306,93 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
 }
 
 // TODO add test case
+    TEST_CASE("Clear list by repeated deleteAt head")
+    {
+        DoublyLinkedList<int> list;
+        for (int i=0;i<6;++i) list.insertAtTail(i);
+        while(list.size()>0) list.deleteAt(0);
+        CHECK(list.size()==0);
+    }
+
+    TEST_CASE("Insert at middle maintains correct links")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(3);
+        list.insertAt(1,2);
+        CHECK(list.get(0)==1);
+        CHECK(list.get(1)==2);
+        CHECK(list.get(2)==3);
+    }
+
+    TEST_CASE("Mix head and tail insertions for chars")
+    {
+        DoublyLinkedList<char> list;
+        list.insertAtHead('b');
+        list.insertAtTail('c');
+        list.insertAtHead('a');
+        CHECK(list.toString().find("a")!=std::string::npos);
+        CHECK(list.size()==3);
+    }
+
+    TEST_CASE("Delete at tail until empty")
+    {
+        DoublyLinkedList<int> list;
+        for (int i=1;i<=3;++i) list.insertAtTail(i);
+        list.deleteAt(2);
+        list.deleteAt(1);
+        list.deleteAt(0);
+        CHECK(list.size()==0);
+    }
+
+    TEST_CASE("Reverse list with odd number of elements")
+    {
+        DoublyLinkedList<int> list;
+        for (int i=1;i<=5;++i) list.insertAtTail(i);
+        list.reverse();
+        CHECK(list.get(0)==5);
+        CHECK(list.get(4)==1);
+    }
+
+    TEST_CASE("IndexOf non-existing element returns -1")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(10);
+        CHECK(list.indexOf(5)==-1);
+    }
+
+    TEST_CASE("Contains works after deletions")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(4);
+        list.insertAtTail(5);
+        list.deleteAt(1);
+        CHECK(list.contains(4));
+        CHECK_FALSE(list.contains(5));
+    }
+
+    TEST_CASE("Get element and modify via reference")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(100);
+        int &ref = list.get(0);
+        ref = 200;
+        CHECK(list.get(0)==200);
+    }
+
+    TEST_CASE("Insert and reverse with strings")
+    {
+        DoublyLinkedList<std::string> list;
+        list.insertAtTail("x");
+        list.insertAtTail("y");
+        list.insertAtTail("z");
+        list.reverse();
+        CHECK(list.get(0)=="z");
+        CHECK(list.get(2)=="x");
+    }
+
+    TEST_CASE("ToString with empty list returns []")
+    {
+        DoublyLinkedList<int> list;
+        CHECK(list.toString()=="[]");
+    }

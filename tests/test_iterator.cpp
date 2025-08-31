@@ -224,3 +224,96 @@ TEST_SUITE("DoublyLinkedList Iterator")
 
     // TODO add test case
 }
+    TEST_CASE("Iterate backwards using -- from end")
+    {
+        DoublyLinkedList<int> list;
+        for (int i=1;i<=3;++i) list.insertAtTail(i);
+        auto it = list.end();
+        --it; CHECK(*it==3);
+        --it; CHECK(*it==2);
+        --it; CHECK(*it==1);
+    }
+
+    TEST_CASE("Iterator can modify elements directly")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(1);
+        list.insertAtTail(2);
+        for (auto it=list.begin(); it!=list.end(); ++it) *it *= 2;
+        CHECK(list.get(0)==2);
+        CHECK(list.get(1)==4);
+    }
+
+    TEST_CASE("Iterating characters forms string")
+    {
+        DoublyLinkedList<char> list;
+        list.insertAtTail('a');
+        list.insertAtTail('b');
+        list.insertAtTail('c');
+        std::string s;
+        for (auto ch : list) s.push_back(ch);
+        CHECK(s=="abc");
+    }
+
+    TEST_CASE("Multiple iterators reaching same end")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(7);
+        auto a=list.begin();
+        auto b=list.begin();
+        ++a; ++b;
+        CHECK(a==list.end());
+        CHECK(b==list.end());
+    }
+
+    TEST_CASE("Range-for on list with one element")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(42);
+        int sum=0;
+        for (int x: list) sum+=x;
+        CHECK(sum==42);
+    }
+
+    TEST_CASE("Nested iteration over two lists")
+    {
+        DoublyLinkedList<int> a,b;
+        a.insertAtTail(1); a.insertAtTail(2);
+        b.insertAtTail(3); b.insertAtTail(4);
+        int sum=0;
+        for (int x:a) for(int y:b) sum+=x*y;
+        CHECK(sum==1*3+1*4+2*3+2*4);
+    }
+
+    TEST_CASE("Iterator inequality between begin and end")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(9);
+        CHECK(list.begin()!=list.end());
+    }
+
+    TEST_CASE("Iterate list after reverse twice gives original")
+    {
+        DoublyLinkedList<int> list;
+        for (int i=1;i<=4;++i) list.insertAtTail(i);
+        list.reverse();
+        list.reverse();
+        int expected[]={1,2,3,4};
+        int idx=0;
+        for (int x:list) CHECK(x==expected[idx++]);
+    }
+
+    TEST_CASE("Iterator copy assignment works")
+    {
+        DoublyLinkedList<int> list;
+        list.insertAtTail(5);
+        auto it1=list.begin();
+        auto it2=it1;
+        CHECK(*it2==5);
+    }
+
+    TEST_CASE("Empty list iterator equality")
+    {
+        DoublyLinkedList<int> list;
+        CHECK(list.begin()==list.end());
+    }
