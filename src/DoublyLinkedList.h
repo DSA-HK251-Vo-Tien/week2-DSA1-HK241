@@ -30,7 +30,7 @@ public:
     }
 
     void insertAtHead(T data){
-        
+        cout<<"insertAtHead not implemented yet."<<endl;
     }
     void insertAtTail(T data);
     void insertAt(int index, T data);
