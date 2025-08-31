@@ -306,6 +306,8 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
 }
 
 // TODO add test case
+//-----Nguyen Van Sang-----//
+    //-----Test 1-----//
     TEST_CASE("Clear list by repeated deleteAt head")
     {
         DoublyLinkedList<int> list;
@@ -314,6 +316,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.size()==0);
     }
 
+    //-----Test 2-----//
     TEST_CASE("Insert at middle maintains correct links")
     {
         DoublyLinkedList<int> list;
@@ -325,6 +328,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.get(2)==3);
     }
 
+    //-----Test 3-----//
     TEST_CASE("Mix head and tail insertions for chars")
     {
         DoublyLinkedList<char> list;
@@ -335,6 +339,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.size()==3);
     }
 
+    //-----Test 4-----//
     TEST_CASE("Delete at tail until empty")
     {
         DoublyLinkedList<int> list;
@@ -345,6 +350,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.size()==0);
     }
 
+    //-----Test 5-----//
     TEST_CASE("Reverse list with odd number of elements")
     {
         DoublyLinkedList<int> list;
@@ -354,6 +360,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.get(4)==1);
     }
 
+    //-----Test 6-----//
     TEST_CASE("IndexOf non-existing element returns -1")
     {
         DoublyLinkedList<int> list;
@@ -361,6 +368,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.indexOf(5)==-1);
     }
 
+    //-----Test 7-----//
     TEST_CASE("Contains works after deletions")
     {
         DoublyLinkedList<int> list;
@@ -371,6 +379,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK_FALSE(list.contains(5));
     }
 
+    //-----Test 8-----//
     TEST_CASE("Get element and modify via reference")
     {
         DoublyLinkedList<int> list;
@@ -380,6 +389,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.get(0)==200);
     }
 
+    //-----Test 9-----//
     TEST_CASE("Insert and reverse with strings")
     {
         DoublyLinkedList<std::string> list;
@@ -391,6 +401,7 @@ TEST_SUITE("DoublyLinkedList<Point> Operations")
         CHECK(list.get(2)=="x");
     }
 
+    //-----Test 10-----//
     TEST_CASE("ToString with empty list returns []")
     {
         DoublyLinkedList<int> list;

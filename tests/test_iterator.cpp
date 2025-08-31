@@ -223,7 +223,8 @@ TEST_SUITE("DoublyLinkedList Iterator")
     }
 
     // TODO add test case
-}
+    //-----Nguyen Van Sang-----//
+    //-----Test 1-----//
     TEST_CASE("Iterate backwards using -- from end")
     {
         DoublyLinkedList<int> list;
@@ -234,6 +235,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         --it; CHECK(*it==1);
     }
 
+    //-----Test 2-----//
     TEST_CASE("Iterator can modify elements directly")
     {
         DoublyLinkedList<int> list;
@@ -244,6 +246,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         CHECK(list.get(1)==4);
     }
 
+    //-----Test 3-----//
     TEST_CASE("Iterating characters forms string")
     {
         DoublyLinkedList<char> list;
@@ -255,6 +258,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         CHECK(s=="abc");
     }
 
+    //-----Test 4-----//
     TEST_CASE("Multiple iterators reaching same end")
     {
         DoublyLinkedList<int> list;
@@ -266,6 +270,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         CHECK(b==list.end());
     }
 
+    //-----Test 5-----//
     TEST_CASE("Range-for on list with one element")
     {
         DoublyLinkedList<int> list;
@@ -275,6 +280,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         CHECK(sum==42);
     }
 
+    //-----Test 6-----//
     TEST_CASE("Nested iteration over two lists")
     {
         DoublyLinkedList<int> a,b;
@@ -285,6 +291,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         CHECK(sum==1*3+1*4+2*3+2*4);
     }
 
+    //-----Test 7-----//
     TEST_CASE("Iterator inequality between begin and end")
     {
         DoublyLinkedList<int> list;
@@ -292,6 +299,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         CHECK(list.begin()!=list.end());
     }
 
+    //-----Test 8-----//
     TEST_CASE("Iterate list after reverse twice gives original")
     {
         DoublyLinkedList<int> list;
@@ -303,6 +311,7 @@ TEST_SUITE("DoublyLinkedList Iterator")
         for (int x:list) CHECK(x==expected[idx++]);
     }
 
+    //-----Test 9-----//
     TEST_CASE("Iterator copy assignment works")
     {
         DoublyLinkedList<int> list;
@@ -312,8 +321,10 @@ TEST_SUITE("DoublyLinkedList Iterator")
         CHECK(*it2==5);
     }
 
+    //-----Test 10-----//
     TEST_CASE("Empty list iterator equality")
     {
         DoublyLinkedList<int> list;
         CHECK(list.begin()==list.end());
     }
+}
