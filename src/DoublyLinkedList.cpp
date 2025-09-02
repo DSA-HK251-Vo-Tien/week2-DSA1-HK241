@@ -62,24 +62,19 @@ void DoublyLinkedList<T>::insertAt(int index, T data)
     {
         curr = head->next;
         for (int i = 0; i < index; ++i)
-        {
             curr = curr->next;
-        }
     }
     else
     {
         curr = tail->prev;
         for (int i = length - 1; i > index; --i)
-        {
             curr = curr->prev;
-        }
     }
     Node *newNode = new Node(data, curr->prev, curr);
     curr->prev->next = newNode;
     curr->prev = newNode;
     length++;
 }
-
 template <typename T>
 void DoublyLinkedList<T>::deleteAt(int index)
 {
