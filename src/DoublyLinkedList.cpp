@@ -63,15 +63,26 @@ void DoublyLinkedList<T>::insertAt(int index, T data)
     {
         curr = head->next;
         for (int i = 0; i < index; ++i)
+        {
+            if (curr == nullptr)
+                throw std::runtime_error("Unexpected nullptr while traversing list (forward)");
             curr = curr->next;
+        }
     }
     else
     {
         curr = tail;
         for (int i = length; i > index; --i)
+        {
+            if (curr == nullptr)
+                throw std::runtime_error("Unexpected nullptr while traversing list (backward)");
             curr = curr->prev;
+        }
     }
     // insert before curr
+    if (curr == nullptr || curr->prev == nullptr)
+        throw std::runtime_error("Cannot insert: invalid node reference");
+
     Node *newNode = new Node(data, curr->prev, curr);
     curr->prev->next = newNode;
     curr->prev = newNode;
