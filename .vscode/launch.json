@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "i:/0_HCMUT_CS_2024-2028/SECOND YEAR 2025/HK251/DSA/BTL_VT/WEEK2_DSA_251",
+      "program": "i:/0_HCMUT_CS_2024-2028/SECOND YEAR 2025/HK251/DSA/BTL_VT/WEEK2_DSA_251/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
