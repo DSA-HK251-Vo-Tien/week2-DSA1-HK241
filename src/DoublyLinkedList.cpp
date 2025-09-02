@@ -62,13 +62,21 @@ void DoublyLinkedList<T>::insertAt(int index, T data)
     {
         curr = head->next;
         for (int i = 0; i < index; ++i)
+        {
+            if (curr == tail) // tránh vượt qua tail
+                throw std::out_of_range("insertAt traversal out of bounds");
             curr = curr->next;
+        }
     }
     else
     {
         curr = tail->prev;
         for (int i = length - 1; i > index; --i)
+        {
+            if (curr == head) // tránh vượt qua head
+                throw std::out_of_range("insertAt traversal out of bounds");
             curr = curr->prev;
+        }
     }
     Node *newNode = new Node(data, curr->prev, curr);
     curr->prev->next = newNode;
