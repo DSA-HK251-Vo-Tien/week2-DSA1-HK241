@@ -57,15 +57,14 @@ void DoublyLinkedList<T>::insertAt(int index, T data)
         return;
     }
 
-    // find node currently at position index
+    // Tìm node ở vị trí index
     Node *curr;
     if (index <= length / 2)
     {
         curr = head->next;
         for (int i = 0; i < index; ++i)
         {
-            if (curr == nullptr)
-                throw std::runtime_error("Unexpected nullptr while traversing list (forward)");
+            // Không cần kiểm tra curr == nullptr vì danh sách luôn có tail sentinel
             curr = curr->next;
         }
     }
@@ -74,15 +73,11 @@ void DoublyLinkedList<T>::insertAt(int index, T data)
         curr = tail;
         for (int i = length; i > index; --i)
         {
-            if (curr == nullptr)
-                throw std::runtime_error("Unexpected nullptr while traversing list (backward)");
+            // Không cần kiểm tra curr == nullptr vì danh sách luôn có head sentinel
             curr = curr->prev;
         }
     }
-    // insert before curr
-    if (curr == nullptr || curr->prev == nullptr)
-        throw std::runtime_error("Cannot insert: invalid node reference");
-
+    // curr là node đang ở index, chèn trước nó
     Node *newNode = new Node(data, curr->prev, curr);
     curr->prev->next = newNode;
     curr->prev = newNode;
