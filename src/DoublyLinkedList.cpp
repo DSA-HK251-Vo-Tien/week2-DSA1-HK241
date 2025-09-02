@@ -57,27 +57,23 @@ void DoublyLinkedList<T>::insertAt(int index, T data)
         return;
     }
 
-    // Tìm node ở vị trí index
     Node *curr;
     if (index <= length / 2)
     {
         curr = head->next;
         for (int i = 0; i < index; ++i)
         {
-            // Không cần kiểm tra curr == nullptr vì danh sách luôn có tail sentinel
             curr = curr->next;
         }
     }
     else
     {
-        curr = tail;
-        for (int i = length; i > index; --i)
+        curr = tail->prev;
+        for (int i = length - 1; i > index; --i)
         {
-            // Không cần kiểm tra curr == nullptr vì danh sách luôn có head sentinel
             curr = curr->prev;
         }
     }
-    // curr là node đang ở index, chèn trước nó
     Node *newNode = new Node(data, curr->prev, curr);
     curr->prev->next = newNode;
     curr->prev = newNode;
