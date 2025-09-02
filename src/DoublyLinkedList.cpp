@@ -42,33 +42,40 @@ void DoublyLinkedList<T>::insertAtTail(T data)
 }
 
 template <typename T>
-void DoublyLinkedList<T>::insertAt(int index, T data) {
-    if (index < 0 || index > size) {
-        throw std::out_of_range("Index out of bounds");
+void DoublyLinkedList<T>::insertAt(int index, T data)
+{
+    if (index < 0 || index > length)
+        throw std::out_of_range("insertAt index out of range");
+    if (index == 0)
+    {
+        insertAtHead(data);
+        return;
+    }
+    if (index == length)
+    {
+        insertAtTail(data);
+        return;
     }
 
-    Node* newNode = new Node(data);
-    if (index == 0) {
-        // Chèn vào đầu
-        newNode->next = head;
-        if (head) head->prev = newNode;
-        head = newNode;
-        if (size == 0) tail = newNode;
-    } else if (index == size) {
-        // Chèn vào cuối
-        newNode->prev = tail;
-        if (tail) tail->next = newNode;
-        tail = newNode;
-    } else {
-        // Chèn vào giữa
-        Node* curr = head;
-        for (int i = 0; i < index; ++i) curr = curr->next;
-        newNode->prev = curr->prev;
-        newNode->next = curr;
-        curr->prev->next = newNode;
-        curr->prev = newNode;
+    // find node currently at position index
+    Node *curr;
+    if (index <= length / 2)
+    {
+        curr = head->next;
+        for (int i = 0; i < index; ++i)
+            curr = curr->next;
     }
-    size++;
+    else
+    {
+        curr = tail;
+        for (int i = length; i > index; --i)
+            curr = curr->prev;
+    }
+    // insert before curr
+    Node *newNode = new Node(data, curr->prev, curr);
+    curr->prev->next = newNode;
+    curr->prev = newNode;
+    length++;
 }
 
 template <typename T>
